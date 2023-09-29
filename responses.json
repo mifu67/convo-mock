@@ -1,0 +1,90 @@
+{
+    "1": {
+        "text": 
+        [
+            "JULIAN: My brother wasn't suicidal. Did you think that he was suicidal?",
+            "ERIKA: No. Never.",
+            "JULIAN: In fact, I can say with 99% f*cking certainty that he wasn't planning to kill himself last night."
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "My brother wasn't suicidal. Did you think that he was suicidal"},
+            {"role": "user", "content": "No. Never."},
+            {"role": "assistant", "content": "In fact, I can say with 99% f*cking certainty that he wasn't planning to kill himself last night."}
+        ]
+        },
+    "2": {
+        "text":
+        [
+            "JULIAN: He said yesterday that he had something to show me tomorrow. It seemed like it was something big. He was really excited about it.",
+            "JULIAN: And he was talking about all these things that he had to do today.",
+            "JULIAN: I know people can fake these things, but… he's my brother. I could just tell, you know?"
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "He said yesterday that he had something to show me tomorrow. It seemed like it was something big. He was really excited about it. And he was talking about all these things that he had to do today. I know people can fake these things, but… he's my brother. I could just tell, you know?"}
+        ]
+        },
+    "3": {
+        "text": 
+        [
+            "JULIAN: I arrived in Larsen around 7:30. August picked me up from the train station and we got to Le Consulat at 8.",
+            "JULIAN: We were there until 10. Just shooting the sh*t, honestly; we weren't eating for that long. And then we went to this bar—it was called something weird. Snail Trails, maybe.",
+            "JULIAN: We each had one drink and we watched a basketball game. Can't remember who was playing. But August kept looking at his watch. Around midnight, he said that he had to do something, but he would see me tomorrow. He had something important to show me, he said."
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "I arrived in Larsen around 7:30. August picked me up from the train station and we got to Le Consulat at 8. We were there until 10. Just shooting the sh*t, honestly; we weren't eating for that long. And then we went to this bar—it was called something weird. Snail Trails, maybe. We each had one drink and we watched a basketball game. Can't remember who was playing. But August kept looking at his watch. Around midnight, he said that he had to do something, but he would see me tomorrow. He had something important to show me, he said."}
+        ]
+    },
+    "4": {
+        "text":
+        [
+            "JULIAN: He never said what it was. I figured it was for work.",
+            "JULIAN: I should've asked. Maybe I— maybe I could've prevented his death."
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "He never said what it was. I figured it was for work. I should've asked. Maybe I— maybe I could've prevented his death."}
+        ] 
+    },
+    "5": {
+        "text": 
+        [
+            "JULIAN: No idea. But he seemed happy about it.",
+            "JULIAN: He seemed awfully sincere for someone who was planning to kill himself in an hour."
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "No idea. But he seemed happy about it. He seemed awfully sincere for someone who was planning to kill himself in an hour."}
+        ]
+    },
+    "6": {
+        "text":
+        [
+            "JULIAN: I—",
+            "JULIAN: I'm so f*cking angry, Erika.",
+            "JULIAN: My goddamn brother is dead. How could I not be?",
+            "JULIAN: I had to tell my parents. I'm never going to forget my mom's scream. God, it haunts me.",
+            "JULIAN: And I just can't shake the feeling that maybe I could've stopped it.",
+            "ERIKA: Jules…"
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "I— I'm so f*cking angry, Erika. My goddamn brother is dead. How could I not be? I had to tell my parents. I'm never going to forget my mom's scream. God, it haunts me. And I just can't shake the feeling that maybe I could've stopped it."},
+            {"role": "user", "content": "Jules..."}
+        ]
+    },
+    "7": {
+        "text": 
+        [
+            "JULIAN: I don't think so. Honestly.",
+            "JULIAN: I know that suicidal people sometimes seem calmer right before they die or whatever, but I don't even remember him being happier than usual.",
+            "JULIAN: He was just... normal."
+        ],
+        "messages":
+        [
+            {"role": "assistant", "content": "I don't think so. Honestly. I know that suicidal people sometimes seem calmer right before they die or whatever, but I don't even remember him being happier than usual. He was just... normal."}
+        ]
+    }
+}
