@@ -1,4 +1,6 @@
 # Ignore Mac system files
 .DS_store
-# igrnore files related to API keys
+# ignore files related to API keys
 .env
+# ignore my virtual environment
+cs191w/

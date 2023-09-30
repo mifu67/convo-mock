@@ -8,7 +8,7 @@
         ],
         "messages":
         [
-            {"role": "assistant", "content": "My brother wasn't suicidal. Did you think that he was suicidal"},
+            {"role": "assistant", "content": "My brother wasn't suicidal. Did you think that he was suicidal?"},
             {"role": "user", "content": "No. Never."},
             {"role": "assistant", "content": "In fact, I can say with 99% f*cking certainty that he wasn't planning to kill himself last night."}
         ]

@@ -23,8 +23,11 @@ def main():
     # begin with Erika and Julian's introductory conversation
     f = open(intro_file, 'r')
     for line in f:
-        print(line.strip())
-        input()
+        if line[0] == "#":  
+            print(line[1:].strip())
+        else:
+            print(line.strip())
+            input()
     f.close()
     
     initial_messages_f = open('initial-messages.json')
@@ -41,7 +44,8 @@ def main():
     print("Type 'end conversation' to end the conversation.")
 
     # I probably need to clean this up at some point
-    # to do tomorrow: consolidate all system messages, stop the model from making things up, work on line delivery, implement hints
+    # To do: implement hints and debug dialogue tree direction. Use LLM responses for previously explored topics.
+    # the LLM keeps defaulting to topic 3 if the user doesn't ask a question?
     while True:
         if num_topics_explored == NUM_TOPICS:
             break
@@ -59,6 +63,7 @@ def main():
         response = response_raw["choices"][0]["message"]["content"]
         # tag is first 30 characters
         tag = response[:30]
+        # print("RESPONSE:", response)
         if tag == "Conversation topic 1 triggered":
             explored_topics_set.add(1)
             num_topics_explored += 1
