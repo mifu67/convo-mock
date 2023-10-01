@@ -1,0 +1,22 @@
+[
+    {
+        "role": "system",
+        "content": "The user will input some text. Respond 'Y' if the user's text contains a question. Respond 'N' if the user's text does not contain a question."
+    },
+    {
+        "role": "user",
+        "content": "why don't you think that your brother killed himself"
+    },
+    {
+        "role": "assistant",
+        "content": "Y"
+    },
+    {
+        "role": "user",
+        "content": "I'm sorry. I wish I could help you."
+    },
+    {
+        "role": "assistant",
+        "content": "N"
+    }
+]

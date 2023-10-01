@@ -10,13 +10,36 @@ NUM_TOPICS = 6
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-def append_line(line: str, messages: List[dict]) -> None:
-    split_line = line.split(": ")
-    if split_line[0] == "ERIKA":
-        messages.append({"role": "user", "content": split_line[1]})
-    else:
-        messages.append({"role": "assistant", "content": split_line[1]})
+RESPONSES_F = open('responses.json')
+RESPONSES = json.load(RESPONSES_F)
+RESPONSES_F.close()
 
+def check_for_question(input: str, messages: List[dict]) -> bool:
+    messages.append({"role": "user", "content": input})
+    response_raw = openai.ChatCompletion.create(
+            model=MODEL,
+            messages=messages,
+            temperature=0,
+        )
+    response = response_raw["choices"][0]["message"]["content"]
+    messages.pop()
+    return response == "Y"
+
+def process_tag(index, contains_question, explored_topics_set, 
+                response, messages, num_topics_explored) -> int:
+    if contains_question:
+        explored_topics_set.add(index)
+        if index != 6:
+            num_topics_explored += 1
+        for line in RESPONSES[str(index)]["text"]:
+            print(line)
+            input()
+        messages += RESPONSES[str(index)]["messages"]
+    else:
+        print(response[32:])
+        messages.append({"role": "assistant", "content": response[30:]})
+    return num_topics_explored
+    
 def main():
     intro_file = "intro-erika-julian.txt"
     outro_file = "outro-erika-julian.txt"
@@ -27,25 +50,23 @@ def main():
             print(line[1:].strip())
         else:
             print(line.strip())
-            input()
+            # input()
     f.close()
     
     initial_messages_f = open('initial-messages.json')
     initial_messages = json.load(initial_messages_f)
     initial_messages_f.close()
 
-    responses_f = open('responses.json')
-    responses = json.load(responses_f)
-    responses_f.close()
+    check_q_messages_f = open('check-q-messages.json')
+    check_q_messages = json.load(check_q_messages_f)
+    check_q_messages_f.close()
 
     num_topics_explored = 0
     messages = initial_messages
     explored_topics_set = set()
-    print("Type 'end conversation' to end the conversation.")
 
     # I probably need to clean this up at some point
-    # To do: implement hints and debug dialogue tree direction. Use LLM responses for previously explored topics.
-    # the LLM keeps defaulting to topic 3 if the user doesn't ask a question?
+    # To do: implement hints and debug dialogue tree direction. Use LLM RESPONSES for previously explored topics.
     while True:
         if num_topics_explored == NUM_TOPICS:
             break
@@ -53,6 +74,9 @@ def main():
         user_input = input("ERIKA: ")
         if user_input == "end conversation":
             break
+        while not user_input:
+            user_input = input("ERIKA: ")
+        contains_question = check_for_question(user_input, check_q_messages)
         print("")
         messages.append({"role": "user", "content": user_input})
         response_raw = openai.ChatCompletion.create(
@@ -61,66 +85,34 @@ def main():
             temperature=0,
         )
         response = response_raw["choices"][0]["message"]["content"]
+        print(response)
         # tag is first 30 characters
         tag = response[:30]
-        # print("RESPONSE:", response)
+        
         if tag == "Conversation topic 1 triggered":
-            explored_topics_set.add(1)
-            num_topics_explored += 1
-            for line in responses["1"]["text"]:
-                print(line)
-                input()
-            messages += responses["1"]["messages"]
+            num_topics_explored = process_tag(1, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 2 triggered":
-            explored_topics_set.add(2)
-            num_topics_explored += 1
-            for line in responses["2"]["text"]:
-                print(line)
-                input()
-            messages += responses["2"]["messages"]
+            num_topics_explored = process_tag(2, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 3 triggered":
-            explored_topics_set.add(3)
-            num_topics_explored += 1
-            for line in responses["3"]["text"]:
-                print(line)
-                input()
-            messages += responses["3"]["messages"]
+            num_topics_explored = process_tag(3, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 4 triggered":
-            explored_topics_set.add(4)
-            num_topics_explored += 1
-            if not (3 in explored_topics_set):
+            if (not (3 in explored_topics_set) and contains_question):
                 confused_line = "JULIAN: What? Oh, did August also tell you yesterday that he had to do something at midnight?"
                 print(confused_line)
                 messages.append({"role": "assistant", "content": confused_line})
-            for line in responses["4"]["text"]:
-                print(line)
-                input()
-            messages += responses["4"]["messages"]
+            num_topics_explored = process_tag(4, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 5 triggered":
             explored_topics_set.add(5)
             num_topics_explored += 1
-            if not (3 in explored_topics_set or 2 in explored_topics_set):
+            if (not (3 in explored_topics_set or 2 in explored_topics_set) and contains_question):
                 confused_line = "JULIAN: How did you know about that?"
                 print(confused_line)
                 messages.append({"role": "assistant", "content": confused_line})
-            for line in responses["5"]["text"]:
-                print(line)
-                input()
-            messages += responses["5"]["messages"]
+            num_topics_explored = process_tag(5, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 6 triggered":
-            explored_topics_set.add(6)
-            # this is a bonus question that doesn't count towards conversation topics
-            for line in responses["6"]["text"]:
-                print(line)
-                input()
-            messages += responses["6"]["messages"]
+            num_topics_explored = process_tag(6, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 7 triggered":
-            explored_topics_set.add(7)
-            num_topics_explored += 1
-            for line in responses["7"]["text"]:
-                print(line)
-                input()
-            messages += responses["7"]["messages"]
+            num_topics_explored = process_tag(7, contains_question, explored_topics_set, response, messages, num_topics_explored)
         else:
             print("JULIAN: " + response)
         messages.append({"role": "assistant", "content": response})
