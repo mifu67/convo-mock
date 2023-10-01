@@ -1,4 +1,5 @@
 import json
+import random
 import os
 import openai
 
@@ -13,6 +14,30 @@ openai.api_key = os.getenv('OPENAI_API_KEY')
 RESPONSES_F = open('responses.json')
 RESPONSES = json.load(RESPONSES_F)
 RESPONSES_F.close()
+
+def get_hint(explored_topics: set) -> None:
+    potential = set([1, 2, 3, 4, 5, 6, 7]) - explored_topics
+    if not (1 in explored_topics):
+        potential.remove(2)
+    if not (3 in explored_topics):
+        potential.remove(4)
+    if not (3 in explored_topics or 2 in explored_topics):
+        potential.remove(5)
+    q = random.choice(list(potential))
+    if q == 1:
+        print("Maybe I should ask why Julian doesn't think that August killed himself.")
+    elif q == 2:
+        print("Maybe I should ask what makes Julian so sure that August didn't commit suicide.")
+    elif q == 3:
+        print("I should figure out exactly what Julian and August did last night.")
+    elif q == 4: 
+        print("What did August need to do?")
+    elif q == 5: 
+        print("I wonder what August wanted to show Jules...")
+    elif q == 6:
+        print("Maybe I should ask how Jules is doing.")
+    elif q == 7:
+        print("Maybe I should ask Jules if his brother seemed off last night.")
 
 def check_for_question(input: str, messages: List[dict]) -> bool:
     messages.append({"role": "user", "content": input})
@@ -50,7 +75,7 @@ def main():
             print(line[1:].strip())
         else:
             print(line.strip())
-            # input()
+            input()
     f.close()
     
     initial_messages_f = open('initial-messages.json')
@@ -65,17 +90,25 @@ def main():
     messages = initial_messages
     explored_topics_set = set()
 
-    # I probably need to clean this up at some point
-    # To do: implement hints and debug dialogue tree direction. Use LLM RESPONSES for previously explored topics.
+    num_hints_remaining = 3
+
     while True:
         if num_topics_explored == NUM_TOPICS:
             break
 
         user_input = input("ERIKA: ")
-        if user_input == "end conversation":
-            break
         while not user_input:
             user_input = input("ERIKA: ")
+        if user_input == "end conversation":
+            break
+        elif user_input == "hint":
+            if num_hints_remaining == 0:
+                print("Sorry. You're out of hints.")
+                continue
+            num_hints_remaining -= 1
+            get_hint(explored_topics_set)
+            continue
+
         contains_question = check_for_question(user_input, check_q_messages)
         print("")
         messages.append({"role": "user", "content": user_input})
@@ -85,7 +118,7 @@ def main():
             temperature=0,
         )
         response = response_raw["choices"][0]["message"]["content"]
-        print(response)
+        # print(response)
         # tag is first 30 characters
         tag = response[:30]
         
@@ -97,6 +130,7 @@ def main():
             num_topics_explored = process_tag(3, contains_question, explored_topics_set, response, messages, num_topics_explored)
         elif tag == "Conversation topic 4 triggered":
             if (not (3 in explored_topics_set) and contains_question):
+                # this might be an issue if the LLM brings it up... anyway. We'll cross that bridge when we get there.
                 confused_line = "JULIAN: What? Oh, did August also tell you yesterday that he had to do something at midnight?"
                 print(confused_line)
                 messages.append({"role": "assistant", "content": confused_line})
@@ -105,6 +139,7 @@ def main():
             explored_topics_set.add(5)
             num_topics_explored += 1
             if (not (3 in explored_topics_set or 2 in explored_topics_set) and contains_question):
+                # this might be an issue if the LLM brings it up... anyway. We'll cross that bridge when we get there.
                 confused_line = "JULIAN: How did you know about that?"
                 print(confused_line)
                 messages.append({"role": "assistant", "content": confused_line})
