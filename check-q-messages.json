@@ -1,7 +1,7 @@
 [
     {
         "role": "system",
-        "content": "The user will input some text. Respond 'Y' if the user's text contains a question. Respond 'N' if the user's text does not contain a question."
+        "content": "The user will input some text. Respond 'Y' if the user's text contains a question. Respond 'M' if the user's text contains multiple questions, or if the user's is asking about multiple subjects in a single question. Respond 'N' if the user's text does not contain a question."
     },
     {
         "role": "user",

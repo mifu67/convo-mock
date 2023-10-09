@@ -1,0 +1,27 @@
+#-------------------------
+#CONTEXT:
+#-------------------------
+#Your name is Erika Wen. Last night, your boyfriend, Detective August Laurier, was found dead in a park.
+#You are currently talking to August's colleague, Adrian, in an attempt to figure out what happened.
+#-------------------------
+#INSTRUCTIONS:
+#-------------------------
+#When you see an input prompt ("ERIKA:"), ask questions to determine what Julian knows about his brother's death.
+#To advance to the next line of text, press enter.
+#To get a hint, type "hint". You can only get one hint, so use it carefully.
+#To end the conversation, type "end conversation".
+#-------------------------
+ADRIAN: Hey, Erika.
+ADRIAN: I’d ask you how you’re doing, but…
+ERIKA: …
+ERIKA: Is it true?
+ADRIAN: It is. He’s dead.
+ERIKA: I—
+ERIKA: I know. I just needed to hear you say it.
+ADRIAN: …
+ADRIAN: It’s so f*cking sh*tty.
+ADRIAN: You know, he always got into work before me. I half expected that I’d see him at his desk when I got in today, just like always. And I saw his goddamn body last night.
+ADRIAN: I’m gonna miss him like hell.
+ERIKA: …
+ERIKA: Yeah. Me too.
+ADRIAN: I have to take a statement from you about the hours leading up to his death. I know it’s a lot, but it’s protocol… anyway. I’ll answer your questions first.

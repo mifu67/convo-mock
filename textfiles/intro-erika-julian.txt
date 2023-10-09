@@ -8,7 +8,7 @@
 #-------------------------
 #When you see an input prompt ("ERIKA:"), ask questions to determine what Julian knows about his brother's death.
 #To advance to the next line of text, press enter.
-#To get a hint, type "hint". You can get up to 3 hints.
+#To get a hint, type "hint". You can only get one hint, so use it carefully.
 #To end the conversation, type "end conversation".
 #-------------------------
 ERIKA: Julian. You're here.
