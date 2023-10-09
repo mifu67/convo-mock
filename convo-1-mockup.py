@@ -126,6 +126,14 @@ def main():
             print("ADRIAN: " + response)
             messages.append({"role": "assistant", "content": response})
     
+    # once the user has exhausted all of the info topics, they'll exit the loop
+    # if they didn't ask this question, ask it for them
+    if not (5 in explored_topics_set):
+        print("ERIKA: Can I do anything?")
+        for line in RESPONSES[str(5)]["text"]:
+            print(line)
+            input()
+
     f = open(outro_file, 'r')
     for line in f:
         print(line.strip())
